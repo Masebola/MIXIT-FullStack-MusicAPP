@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>MIXIT - Home</title>
+    <link rel="stylesheet" href="/css/main.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+  </head>
+  <body>
+    <!-- Sidebar Navigation -->
+    <aside class="sidebar">
+      <div class="sidebar-header">
+        <h1 class="logo">MIXIT</h1>
+      </div>
+
+      <nav class="sidebar-nav">
+        <a href="#" class="nav-item active" data-page="home">
+          <i class="fas fa-home"></i>
+          <span>Home</span>
+        </a>
+        <a href="#" class="nav-item" data-page="search">
+          <i class="fas fa-search"></i>
+          <span>Search</span>
+        </a>
+        <a href="#" class="nav-item" data-page="library">
+          <i class="fas fa-book"></i>
+          <span>Your Library</span>
+        </a>
+      </nav>
+
+      <div class="sidebar-divider"></div>
+
+      <nav class="sidebar-nav">
+        <a href="#" class="nav-item" data-page="playlists">
+          <i class="fas fa-plus-square"></i>
+          <span>Create Playlist</span>
+        </a>
+        <a href="#" class="nav-item" data-page="favorites">
+          <i class="fas fa-heart"></i>
+          <span>Liked Songs</span>
+        </a>
+      </nav>
+
+      <div class="user-section">
+        <div class="user-info">
+          <img src="/placeholder-user.jpg" alt="User" class="user-avatar" />
+          <div class="user-details">
+            <span class="user-name" id="userName">User</span>
+            <span class="user-role" id="userRole">Listener</span>
+          </div>
+        </div>
+        <button class="btn-logout" id="logoutBtn">
+          <i class="fas fa-sign-out-alt"></i>
+        </button>
+      </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+      <!-- Header -->
+      <header class="content-header">
+        <div class="header-actions">
+          <button class="btn-icon" id="backBtn">
+            <i class="fas fa-chevron-left"></i>
+          </button>
+          <button class="btn-icon" id="forwardBtn">
+            <i class="fas fa-chevron-right"></i>
+          </button>
+        </div>
+
+        <div class="header-user">
+          <button class="btn-upload" id="uploadBtn" style="display: none">
+            <i class="fas fa-upload"></i>
+            Upload Song
+          </button>
+          <button class="btn-admin" id="adminBtn" style="display: none">
+            <i class="fas fa-cog"></i>
+            Admin
+          </button>
+        </div>
+      </header>
+
+      <!-- Content Area -->
+      <div class="content-area" id="contentArea">
+        <!-- Home View -->
+        <div class="view-container" id="homeView">
+          <h2 class="section-title">Recently Played</h2>
+          <div class="songs-grid" id="recentlyPlayed">
+            <div class="loading">Loading...</div>
+          </div>
+
+          <h2 class="section-title">All Songs</h2>
+          <div class="songs-list" id="allSongs">
+            <div class="loading">Loading...</div>
+          </div>
+        </div>
+
+        <!-- Search View -->
+        <div class="view-container hidden" id="searchView">
+          <h2 class="section-title">Search</h2>
+          <div class="search-container">
+            <input
+              type="text"
+              class="search-input"
+              id="searchInput"
+              placeholder="What do you want to listen to?"
+            />
+            <i class="fas fa-search search-icon"></i>
+          </div>
+          <div class="songs-list" id="searchResults"></div>
+        </div>
+
+        <!-- Library View -->
+        <div class="view-container hidden" id="libraryView">
+          <h2 class="section-title">Your Library</h2>
+          <div class="library-tabs">
+            <button class="tab-btn active" data-tab="playlists">
+              Playlists
+            </button>
+            <button class="tab-btn" data-tab="artists">Artists</button>
+            <button class="tab-btn" data-tab="albums">Albums</button>
+          </div>
+          <div class="library-content" id="libraryContent">
+            <div class="loading">Loading...</div>
+          </div>
+        </div>
+
+        <!-- Favorites View -->
+        <div class="view-container hidden" id="favoritesView">
+          <div class="favorites-header">
+            <div class="favorites-info">
+              <i class="fas fa-heart favorites-icon"></i>
+              <div>
+                <h2 class="section-title">Liked Songs</h2>
+                <p class="favorites-count" id="favoritesCount">0 songs</p>
+              </div>
+            </div>
+          </div>
+          <div class="songs-list" id="favoritesSongs">
+            <div class="loading">Loading...</div>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <!-- Music Player -->
+    <div class="music-player">
+      <div class="player-song-info">
+        <img
+          src="/placeholder.jpg"
+          alt="Album Art"
+          class="player-artwork"
+          id="playerArtwork"
+        />
+        <div class="player-details">
+          <div class="player-title" id="playerTitle">Select a song</div>
+          <div class="player-artist" id="playerArtist">-</div>
+        </div>
+        <button class="btn-favorite-player" id="favoritePlayerBtn">
+          <i class="far fa-heart"></i>
+        </button>
+      </div>
+
+      <div class="player-controls">
+        <div class="control-buttons">
+          <button class="btn-control" id="shuffleBtn">
+            <i class="fas fa-random"></i>
+          </button>
+          <button class="btn-control" id="prevBtn">
+            <i class="fas fa-step-backward"></i>
+          </button>
+          <button class="btn-control btn-play" id="playBtn">
+            <i class="fas fa-play"></i>
+          </button>
+          <button class="btn-control" id="nextBtn">
+            <i class="fas fa-step-forward"></i>
+          </button>
+          <button class="btn-control" id="repeatBtn">
+            <i class="fas fa-redo"></i>
+          </button>
+        </div>
+
+        <div class="progress-container">
+          <span class="time-current" id="currentTime">0:00</span>
+          <div class="progress-bar">
+            <div class="progress-fill" id="progressFill"></div>
+            <input
+              type="range"
+              class="progress-slider"
+              id="progressSlider"
+              min="0"
+              max="100"
+              value="0"
+            />
+          </div>
+          <span class="time-duration" id="duration">0:00</span>
+        </div>
+      </div>
+
+      <div class="player-volume">
+        <button class="btn-control" id="volumeBtn">
+          <i class="fas fa-volume-up"></i>
+        </button>
+        <div class="volume-slider-container">
+          <input
+            type="range"
+            class="volume-slider"
+            id="volumeSlider"
+            min="0"
+            max="100"
+            value="70"
+          />
+        </div>
+        <button class="btn-control" id="queueBtn">
+          <i class="fas fa-list"></i>
+        </button>
+      </div>
+    </div>
+
+    <!-- Upload Modal -->
+    <div class="modal hidden" id="uploadModal">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3>Upload Song</h3>
+          <button class="btn-close" id="closeUploadModal">
+            <i class="fas fa-times"></i>
+          </button>
+        </div>
+        <form id="uploadForm" enctype="multipart/form-data">
+          <div class="form-group">
+            <label for="songTitle">Title *</label>
+            <input
+              type="text"
+              id="songTitle"
+              name="title"
+              required
+              class="form-input"
+            />
+          </div>
+          <div class="form-group">
+            <label for="songArtist">Artist *</label>
+            <input
+              type="text"
+              id="songArtist"
+              name="artist"
+              required
+              class="form-input"
+            />
+          </div>
+          <div class="form-group">
+            <label for="songAlbum">Album</label>
+            <input type="text" id="songAlbum" name="album" class="form-input" />
+          </div>
+          <div class="form-group">
+            <label for="songGenre">Genre</label>
+            <input type="text" id="songGenre" name="genre" class="form-input" />
+          </div>
+          <div class="form-group">
+            <label for="songDuration">Duration (seconds)</label>
+            <input
+              type="number"
+              id="songDuration"
+              name="duration"
+              class="form-input"
+            />
+          </div>
+          <div class="form-group">
+            <label for="songFile">Audio File *</label>
+            <input
+              type="file"
+              id="songFile"
+              name="song"
+              accept="audio/*"
+              required
+              class="form-input"
+            />
+          </div>
+          <div class="form-group">
+            <label for="artworkFile">Artwork</label>
+            <input
+              type="file"
+              id="artworkFile"
+              name="artwork"
+              accept="image/*"
+              class="form-input"
+            />
+          </div>
+          <div class="modal-actions">
+            <button type="button" class="btn-secondary" id="cancelUpload">
+              Cancel
+            </button>
+            <button type="submit" class="btn-primary">Upload</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- Audio Element -->
+    <audio id="audioPlayer"></audio>
+
+    <script src="/js/home.js"></script>
+  </body>
+</html>

@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>MIXIT - Login</title>
+    <link rel="stylesheet" href="/css/auth.css" />
+  </head>
+  <body>
+    <div class="auth-container">
+      <div class="auth-card">
+        <div class="logo">
+          <h1>MIXIT</h1>
+          <p>Your Music, Your Way</p>
+        </div>
+
+        <h2 class="auth-title">Welcome Back</h2>
+
+        <div id="errorMessage" class="error-message"></div>
+
+        <form id="loginForm">
+          <div class="form-group">
+            <label for="username">Username or Email</label>
+            <input type="text" id="username" name="username" placeholder="Enter your username or email" required />
+          </div>
+
+          <div class="form-group">
+            <label for="password">Password</label>
+            <input type="password" id="password" name="password" placeholder="Enter your password" required />
+          </div>
+
+          <button type="submit" class="btn-primary">Log In</button>
+        </form>
+
+        <div class="divider">OR</div>
+
+        <div class="auth-links">
+          <p>Don't have an account? <a href="/signup.html">Sign up</a></p>
+          <p style="margin-top: 12px">
+            <a href="/admin-login.html">Admin Login</a>
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <script src="/js/auth.js"></script>
+    <script>
+      document.getElementById("loginForm").addEventListener("submit", async (e) => {
+        e.preventDefault()
+
+        const username = document.getElementById("username").value
+        const password = document.getElementById("password").value
+        const errorDiv = document.getElementById("errorMessage")
+
+        try {
+          const response = await fetch("/api/auth/login", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ username, password }),
+          })
+
+          const data = await response.json()
+
+          if (response.ok) {
+            localStorage.setItem("token", data.token)
+            localStorage.setItem("user", JSON.stringify(data.user))
+            window.location.href = "/home.html"
+          } else {
+            showError(data.error || "Login failed")
+          }
+        } catch (error) {
+          showError("Connection error. Please try again.")
+        }
+      })
+
+      function showError(message) {
+        const errorDiv = document.getElementById("errorMessage")
+        errorDiv.textContent = message
+        errorDiv.classList.add("show")
+        setTimeout(() => errorDiv.classList.remove("show"), 5000)
+      }
+    </script>
+  </body>
+</html>

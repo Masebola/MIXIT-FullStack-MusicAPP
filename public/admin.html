@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>MIXIT - Admin Dashboard</title>
+    <link rel="stylesheet" href="/css/admin.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+  </head>
+  <body>
+    <!-- Sidebar Navigation -->
+    <aside class="sidebar">
+      <div class="sidebar-header">
+        <h1 class="logo">MIXIT</h1>
+        <span class="admin-badge">Admin</span>
+      </div>
+
+      <nav class="sidebar-nav">
+        <a href="#" class="nav-item active" data-page="overview">
+          <i class="fas fa-chart-line"></i>
+          <span>Overview</span>
+        </a>
+        <a href="#" class="nav-item" data-page="users">
+          <i class="fas fa-users"></i>
+          <span>Users</span>
+        </a>
+        <a href="#" class="nav-item" data-page="songs">
+          <i class="fas fa-music"></i>
+          <span>Songs</span>
+        </a>
+        <a href="#" class="nav-item" data-page="playlists">
+          <i class="fas fa-list"></i>
+          <span>Playlists</span>
+        </a>
+      </nav>
+
+      <div class="sidebar-divider"></div>
+
+      <nav class="sidebar-nav">
+        <a href="/home.html" class="nav-item">
+          <i class="fas fa-home"></i>
+          <span>Back to Home</span>
+        </a>
+      </nav>
+
+      <div class="user-section">
+        <div class="user-info">
+          <img src="/placeholder-user.jpg" alt="Admin" class="user-avatar" />
+          <div class="user-details">
+            <span class="user-name" id="adminName">Admin</span>
+            <span class="user-role">Administrator</span>
+          </div>
+        </div>
+        <button class="btn-logout" id="logoutBtn">
+          <i class="fas fa-sign-out-alt"></i>
+        </button>
+      </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+      <!-- Header -->
+      <header class="content-header">
+        <h2 class="page-title" id="pageTitle">Dashboard Overview</h2>
+        <div class="header-actions">
+          <button class="btn-refresh" id="refreshBtn">
+            <i class="fas fa-sync-alt"></i>
+            Refresh
+          </button>
+        </div>
+      </header>
+
+      <!-- Content Area -->
+      <div class="content-area" id="contentArea">
+        <!-- Overview View -->
+        <div class="view-container" id="overviewView">
+          <!-- Stats Cards -->
+          <div class="stats-grid">
+            <div class="stat-card">
+              <div class="stat-icon" style="background-color: #1db954">
+                <i class="fas fa-users"></i>
+              </div>
+              <div class="stat-info">
+                <div class="stat-label">Total Users</div>
+                <div class="stat-value" id="totalUsers">0</div>
+              </div>
+            </div>
+
+            <div class="stat-card">
+              <div class="stat-icon" style="background-color: #3b82f6">
+                <i class="fas fa-music"></i>
+              </div>
+              <div class="stat-info">
+                <div class="stat-label">Total Songs</div>
+                <div class="stat-value" id="totalSongs">0</div>
+              </div>
+            </div>
+
+            <div class="stat-card">
+              <div class="stat-icon" style="background-color: #f59e0b">
+                <i class="fas fa-list"></i>
+              </div>
+              <div class="stat-info">
+                <div class="stat-label">Total Playlists</div>
+                <div class="stat-value" id="totalPlaylists">0</div>
+              </div>
+            </div>
+
+            <div class="stat-card">
+              <div class="stat-icon" style="background-color: #8b5cf6">
+                <i class="fas fa-play"></i>
+              </div>
+              <div class="stat-info">
+                <div class="stat-label">Total Plays</div>
+                <div class="stat-value" id="totalPlays">0</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Recent Activity -->
+          <div class="section">
+            <h3 class="section-title">Recent Activity</h3>
+            <div class="activity-list" id="recentActivity">
+              <div class="loading">Loading activity...</div>
+            </div>
+          </div>
+
+          <!-- Top Songs -->
+          <div class="section">
+            <h3 class="section-title">Top Songs</h3>
+            <div class="table-container">
+              <table class="data-table">
+                <thead>
+                  <tr>
+                    <th>Rank</th>
+                    <th>Title</th>
+                    <th>Artist</th>
+                    <th>Plays</th>
+                  </tr>
+                </thead>
+                <tbody id="topSongs">
+                  <tr>
+                    <td colspan="4" class="loading">Loading...</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- Users View -->
+        <div class="view-container hidden" id="usersView">
+          <div class="section">
+            <div class="section-header">
+              <h3 class="section-title">All Users</h3>
+              <div class="search-box">
+                <i class="fas fa-search"></i>
+                <input
+                  type="text"
+                  placeholder="Search users..."
+                  id="userSearch"
+                />
+              </div>
+            </div>
+
+            <div class="table-container">
+              <table class="data-table">
+                <thead>
+                  <tr>
+                    <th>ID</th>
+                    <th>Username</th>
+                    <th>Email</th>
+                    <th>Role</th>
+                    <th>Created</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody id="usersTable">
+                  <tr>
+                    <td colspan="6" class="loading">Loading users...</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- Songs View -->
+        <div class="view-container hidden" id="songsView">
+          <div class="section">
+            <div class="section-header">
+              <h3 class="section-title">All Songs</h3>
+              <div class="search-box">
+                <i class="fas fa-search"></i>
+                <input
+                  type="text"
+                  placeholder="Search songs..."
+                  id="songSearch"
+                />
+              </div>
+            </div>
+
+            <div class="table-container">
+              <table class="data-table">
+                <thead>
+                  <tr>
+                    <th>ID</th>
+                    <th>Title</th>
+                    <th>Artist</th>
+                    <th>Album</th>
+                    <th>Genre</th>
+                    <th>Plays</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody id="songsTable">
+                  <tr>
+                    <td colspan="7" class="loading">Loading songs...</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- Playlists View -->
+        <div class="view-container hidden" id="playlistsView">
+          <div class="section">
+            <div class="section-header">
+              <h3 class="section-title">All Playlists</h3>
+              <div class="search-box">
+                <i class="fas fa-search"></i>
+                <input
+                  type="text"
+                  placeholder="Search playlists..."
+                  id="playlistSearch"
+                />
+              </div>
+            </div>
+
+            <div class="playlists-grid" id="playlistsGrid">
+              <div class="loading">Loading playlists...</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <!-- Delete Confirmation Modal -->
+    <div class="modal hidden" id="deleteModal">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3>Confirm Delete</h3>
+          <button class="btn-close" id="closeDeleteModal">
+            <i class="fas fa-times"></i>
+          </button>
+        </div>
+        <div class="modal-body">
+          <p id="deleteMessage">Are you sure you want to delete this item?</p>
+        </div>
+        <div class="modal-actions">
+          <button class="btn-secondary" id="cancelDelete">Cancel</button>
+          <button class="btn-danger" id="confirmDelete">Delete</button>
+        </div>
+      </div>
+    </div>
+
+    <script src="/js/admin.js"></script>
+  </body>
+</html>

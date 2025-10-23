@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>MIXIT - Admin Login</title>
+    <link rel="stylesheet" href="/css/auth.css" />
+  </head>
+  <body>
+    <div class="auth-container">
+      <div class="auth-card">
+        <div class="logo">
+          <h1>MIXIT</h1>
+          <p>Your Music, Your Way</p>
+        </div>
+
+        <h2 class="auth-title">
+          Admin Access
+          <span class="admin-badge">ADMIN</span>
+        </h2>
+
+        <div id="errorMessage" class="error-message"></div>
+
+        <form id="adminLoginForm">
+          <div class="form-group">
+            <label for="username">Admin Username</label>
+            <input type="text" id="username" name="username" placeholder="Enter admin username" required />
+          </div>
+
+          <div class="form-group">
+            <label for="password">Admin Password</label>
+            <input type="password" id="password" name="password" placeholder="Enter admin password" required />
+          </div>
+
+          <button type="submit" class="btn-primary">Admin Login</button>
+        </form>
+
+        <div class="divider">OR</div>
+
+        <div class="auth-links">
+          <p><a href="/index.html">← Back to regular login</a></p>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      document.getElementById("adminLoginForm").addEventListener("submit", async (e) => {
+        e.preventDefault()
+
+        const username = document.getElementById("username").value
+        const password = document.getElementById("password").value
+
+        try {
+          const response = await fetch("/api/auth/admin-login", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ username, password }),
+          })
+
+          const data = await response.json()
+
+          if (response.ok) {
+            localStorage.setItem("token", data.token)
+            localStorage.setItem("user", JSON.stringify(data.user))
+            window.location.href = "/admin.html"
+          } else {
+            showError(data.error || "Admin login failed")
+          }
+        } catch (error) {
+          showError("Connection error. Please try again.")
+        }
+      })
+
+      function showError(message) {
+        const errorDiv = document.getElementById("errorMessage")
+        errorDiv.textContent = message
+        errorDiv.classList.add("show")
+        setTimeout(() => errorDiv.classList.remove("show"), 5000)
+      }
+    </script>
+  </body>
+</html>
