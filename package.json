@@ -30,17 +30,11 @@
     "path": "latest",
     "react": "^19",
     "react-dom": "^19",
-    "sqlite3": "latest",
-    "tailwind-merge": "^2.5.5",
-    "tailwindcss-animate": "^1.0.7"
+    "sqlite3": "latest"
   },
   "devDependencies": {
     "@types/node": "^22",
-    "@types/react": "^19",
-    "@types/react-dom": "^19",
     "nodemon": "^3.0.1",
-    "postcss": "^8.5",
-    "tailwindcss": "4.1.14",
-    "typescript": "^5"
+    "postcss": "^8.5"
   }
 }
